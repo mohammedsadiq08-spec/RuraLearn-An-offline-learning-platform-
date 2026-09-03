@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 80" fill="none">
+  <!-- Top Roof / Chevron -->
+  <path d="M12 45 L50 12 L88 45" stroke="#12432d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Inner Roof / Chevron -->
+  <path d="M26 47 L50 26 L74 47" stroke="#12432d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

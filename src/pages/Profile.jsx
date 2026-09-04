@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useProgress } from '../hooks/useProgress';
+import { useAuth } from '../context/AuthContext';
 import { storageService } from '../services/storageService';
 import { offlineManager } from '../services/offlineManager';
 import { adaptiveEngine } from '../services/adaptiveEngine';
@@ -19,10 +21,14 @@ import {
   Download,
   Database,
   Share2,
-  Upload
+  Upload,
+  LogOut,
+  Sliders
 } from 'lucide-react';
 
 export default function Profile() {
+  const navigate = useNavigate();
+  const { user, logout } = useAuth();
   const { profile, downloads, updateProfile } = useProgress();
   const [formData, setFormData] = useState({ ...profile });
   const [savedMessage, setSavedMessage] = useState(false);
@@ -76,14 +82,38 @@ export default function Profile() {
         </div>
 
         <div className="flex-1 text-center sm:text-left">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <h2 className="text-2xl font-black text-slate-900 tracking-tight">{profile.name}</h2>
-              <p className="text-xs text-slate-500 font-medium">{profile.email} • Enrolled {profile.joinedDate}</p>
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight">{user?.name || profile.name}</h2>
+                <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold uppercase tracking-wider border border-slate-200">
+                  {user?.provider === 'google' ? 'Google Account' : user?.provider === 'facebook' ? 'Facebook Account' : user?.provider === 'offline_guest' ? 'Offline Guest' : 'Email Account'}
+                </span>
+              </div>
+              <p className="text-xs text-slate-500 font-medium mt-0.5">{user?.email || profile.email} • Enrolled {profile.joinedDate}</p>
             </div>
-            <span className="self-center sm:self-auto px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 font-bold text-xs border border-emerald-200">
-              {profile.currentClass}
-            </span>
+
+            <div className="flex items-center justify-center sm:justify-start gap-2">
+              <Link
+                to="/onboarding"
+                className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-1.5 transition-colors"
+              >
+                <Sliders className="w-3.5 h-3.5 text-slate-500" />
+                <span>Change Goals</span>
+              </Link>
+
+              <button
+                type="button"
+                onClick={async () => {
+                  await logout();
+                  navigate('/login');
+                }}
+                className="px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 font-bold text-xs flex items-center gap-1.5 border border-red-200 transition-colors"
+              >
+                <LogOut className="w-3.5 h-3.5" />
+                <span>Log Out</span>
+              </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-slate-100 text-center sm:text-left">

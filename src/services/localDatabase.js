@@ -2,9 +2,11 @@
 // High-capacity, transaction-safe, offline-first client-side database
 
 const DB_NAME = 'RuraLearnDB';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 
 export const STORES = {
+  USERS: 'users',
+  SESSION: 'session',
   PROFILE: 'profile',
   PROGRESS: 'progress',
   DOWNLOADS: 'downloads',
@@ -29,6 +31,17 @@ class LocalDatabase {
 
       request.onupgradeneeded = (event) => {
         const db = event.target.result;
+
+        // Users store
+        if (!db.objectStoreNames.contains(STORES.USERS)) {
+          const userStore = db.createObjectStore(STORES.USERS, { keyPath: 'id' });
+          userStore.createIndex('email', 'email', { unique: false });
+        }
+
+        // Active session store
+        if (!db.objectStoreNames.contains(STORES.SESSION)) {
+          db.createObjectStore(STORES.SESSION, { keyPath: 'key' });
+        }
 
         // Profile store
         if (!db.objectStoreNames.contains(STORES.PROFILE)) {
@@ -80,7 +93,7 @@ class LocalDatabase {
 
       request.onerror = (event) => {
         console.error('IndexedDB failed to open:', event.target.error);
-        resolve(null); // graceful fallback to localStorage
+        resolve(null);
       };
     });
   }
@@ -169,7 +182,7 @@ class LocalDatabase {
     }
   }
 
-  // Query by index (e.g. get notes for a lesson)
+  // Query by index
   async getByIndex(storeName, indexName, value) {
     try {
       const store = await this.getStore(storeName, 'readonly');

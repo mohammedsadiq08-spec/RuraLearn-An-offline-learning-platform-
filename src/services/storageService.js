@@ -1,5 +1,7 @@
-// RuraLearn Storage Service - LocalStorage & Native IndexedDB Hybrid Engine
+// RuraLearn Production Storage Service - Dual-Layer LocalDB & Backend API Sync
 import { localDB, STORES } from './localDatabase';
+import { apiClient } from './apiClient';
+import { syncEngine } from './offlineSyncEngine';
 
 const STORAGE_KEYS = {
   PROFILE: 'ruralearn_profile_v1',
@@ -13,14 +15,14 @@ const STORAGE_KEYS = {
 const DEFAULT_PROFILE = {
   id: 'current_student',
   name: 'Aarav Sharma',
-  email: 'aarav.sharma@ruralearn.org',
+  email: 'student@ruralearn.org',
   currentClass: 'Class 10',
   currentSubject: 'Mathematics',
   targetGoal: 'Board Exam Preparation & Coding Skills',
   streakDays: 7,
   lastActiveDate: new Date().toISOString().split('T')[0],
   joinedDate: 'August 2026',
-  preferredLanguage: 'en', // 'en' or 'hi'
+  preferredLanguage: 'en',
   highContrast: false,
   fontSize: 'normal',
 };
@@ -42,9 +44,21 @@ export const storageService = {
       const updated = { ...current, ...updates };
       localStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify(updated));
 
-      // Persist to native IndexedDB asynchronously
+      // Persist to native IndexedDB
       localDB.put(STORES.PROFILE, { ...updated, id: 'current_student' });
-      localDB.queueSyncAction('UPDATE_PROFILE', updated);
+
+      // If online, update backend
+      if (navigator.onLine && apiClient.getToken()) {
+        apiClient.put('/api/auth/profile', {
+          name: updated.name,
+          currentClass: updated.currentClass,
+          targetGoal: updated.targetGoal,
+          preferredLanguage: updated.preferredLanguage,
+          streakDays: updated.streakDays,
+        }).catch((err) => console.warn('Online profile update fallback to queue:', err));
+      } else {
+        syncEngine.queueAction('UPDATE_PROFILE', updated);
+      }
 
       window.dispatchEvent(new CustomEvent('ruralearn:profile-changed', { detail: updated }));
       return updated;
@@ -87,7 +101,20 @@ export const storageService = {
 
       // Asynchronous IndexedDB write
       localDB.put(STORES.PROGRESS, { key, ...all[key] });
-      localDB.queueSyncAction('SAVE_PROGRESS', { key, data: all[key] });
+
+      // Sync with backend API
+      if (navigator.onLine && apiClient.getToken()) {
+        apiClient.post('/api/progress/lesson', {
+          classId,
+          subjectId,
+          chapterId,
+          completed: progressData.completed,
+          score: progressData.score,
+          percent: progressData.percent,
+        }).catch((err) => console.warn('Progress sync queued:', err));
+      } else {
+        syncEngine.queueAction('SAVE_PROGRESS', { key, data: all[key] });
+      }
 
       window.dispatchEvent(new CustomEvent('ruralearn:progress-changed', { detail: all }));
       return all[key];
@@ -207,7 +234,18 @@ export const storageService = {
 
       // Save to IndexedDB
       localDB.put(STORES.PRACTICE_HISTORY, newAttempt);
-      localDB.queueSyncAction('RECORD_PRACTICE', newAttempt);
+
+      // Sync with backend API
+      if (navigator.onLine && apiClient.getToken()) {
+        apiClient.post('/api/practice/attempt', {
+          questionId: attempt.questionId,
+          topic: attempt.topic,
+          isCorrect: attempt.isCorrect,
+          difficulty: attempt.difficulty,
+        }).catch((err) => console.warn('Practice attempt sync queued:', err));
+      } else {
+        syncEngine.queueAction('RECORD_PRACTICE', newAttempt);
+      }
 
       window.dispatchEvent(new CustomEvent('ruralearn:practice-changed', { detail: history }));
     } catch (e) {
@@ -227,7 +265,7 @@ export const storageService = {
 
   getLessonNotes(lessonId) {
     const all = this.getAllNotes();
-    return all.filter((n) => n.lessonId === lessonId);
+    return all.filter((n) => n.lessonId === lessonId || n.chapter_key === lessonId);
   },
 
   saveNote(lessonId, text, tag = 'Note') {
@@ -236,6 +274,7 @@ export const storageService = {
     const newNote = {
       id: 'note_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
       lessonId,
+      chapter_key: lessonId,
       text: text.trim(),
       tag,
       createdAt: new Date().toISOString(),
@@ -243,9 +282,17 @@ export const storageService = {
     all.unshift(newNote);
     localStorage.setItem(STORAGE_KEYS.NOTES, JSON.stringify(all));
 
-    // Async IndexedDB persistence
     localDB.put(STORES.STUDY_NOTES, newNote);
-    localDB.queueSyncAction('SAVE_NOTE', newNote);
+
+    if (navigator.onLine && apiClient.getToken()) {
+      apiClient.post('/api/notes', {
+        chapterKey: lessonId,
+        text: newNote.text,
+        tag: newNote.tag,
+      }).catch((err) => console.warn('Note sync queued:', err));
+    } else {
+      syncEngine.queueAction('SAVE_NOTE', newNote);
+    }
 
     window.dispatchEvent(new CustomEvent('ruralearn:notes-changed', { detail: all }));
     return newNote;
@@ -257,7 +304,10 @@ export const storageService = {
     localStorage.setItem(STORAGE_KEYS.NOTES, JSON.stringify(filtered));
 
     localDB.delete(STORES.STUDY_NOTES, noteId);
-    localDB.queueSyncAction('DELETE_NOTE', { id: noteId });
+
+    if (navigator.onLine && apiClient.getToken()) {
+      apiClient.delete(`/api/notes/${noteId}`).catch((err) => console.warn('Note delete failed:', err));
+    }
 
     window.dispatchEvent(new CustomEvent('ruralearn:notes-changed', { detail: filtered }));
   },

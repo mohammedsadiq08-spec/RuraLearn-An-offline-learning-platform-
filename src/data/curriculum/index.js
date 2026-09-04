@@ -1,10 +1,10 @@
 // RuraLearn Master Curriculum Registry & Query Service
-import { CLASSES } from './classes';
-import { CLASS_10_MATH } from './class10Math';
-import { CLASS_10_SCIENCE } from './class10Science';
-import { ENGLISH_CURRICULUM } from './english';
-import { SOCIAL_STUDIES_CURRICULUM } from './socialStudies';
-import { ENGINEERING_CURRICULUM } from './engineering';
+import { CLASSES } from './classes.js';
+import { CLASS_10_MATH } from './class10Math.js';
+import { CLASS_10_SCIENCE } from './class10Science.js';
+import { ENGLISH_CURRICULUM } from './english.js';
+import { SOCIAL_STUDIES_CURRICULUM } from './socialStudies.js';
+import { ENGINEERING_CURRICULUM } from './engineering.js';
 
 // Master nested lessons structure: lessons[class][subject][chapter]
 export const ALL_LESSONS = {

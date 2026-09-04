@@ -17,8 +17,12 @@ import Skills from './pages/Skills';
 import Progress from './pages/Progress';
 import Profile from './pages/Profile';
 
+import AIDoubtBoxModal from './components/common/AIDoubtBoxModal';
+import { Sparkles as SparklesIcon } from 'lucide-react';
+
 function AppLayout({ children }) {
   const location = useLocation();
+  const [isDoubtOpen, setIsDoubtOpen] = useState(false);
   const isAuthPage = location.pathname === '/login' || location.pathname === '/onboarding' || location.pathname === '/splash';
 
   if (isAuthPage) {
@@ -34,6 +38,19 @@ function AppLayout({ children }) {
       <main className="flex-1 pb-20 md:pb-12">
         {children}
       </main>
+
+      {/* Floating AI Doubt Box Button */}
+      <button
+        onClick={() => setIsDoubtOpen(true)}
+        className="fixed bottom-20 md:bottom-8 right-4 md:right-8 z-40 px-4 py-2.5 rounded-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold text-xs shadow-lg flex items-center gap-2 border border-emerald-700 active:scale-95 transition-all"
+        title="Ask AI Doubt Box"
+      >
+        <SparklesIcon className="w-4 h-4 text-emerald-300" />
+        <span className="hidden sm:inline">AI Doubt Box</span>
+      </button>
+
+      {/* AI Doubt Box Modal */}
+      <AIDoubtBoxModal isOpen={isDoubtOpen} onClose={() => setIsDoubtOpen(false)} />
 
       {/* Footer (Desktop & Tablet) */}
       <footer className="bg-white border-t border-slate-200 py-8 px-4 sm:px-6 lg:px-8 text-xs text-slate-500 hidden md:block">

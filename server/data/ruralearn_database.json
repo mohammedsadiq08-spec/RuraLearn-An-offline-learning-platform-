@@ -1,0 +1,169 @@
+{
+  "users": [
+    {
+      "id": "usr_1788542379263_sqm2f",
+      "email": "student@ruralearn.org",
+      "password_hash": "$2b$10$ZDsKpQW3LMm5kyLoyG/XruvwdWEiVTbmIWHGEKUkAfsbsrsN3rxn2",
+      "provider": "email",
+      "role": "student",
+      "created_at": "2026-09-04T17:19:39.263Z"
+    },
+    {
+      "id": "usr_1788542481550_weqra",
+      "email": "test_student_1788542481018@ruralearn.org",
+      "password_hash": "$2b$10$Q0O2ZqH/fAg5w5rBzIqsrOSYYI40hp6GA1gujS4pyh9Vhit0oxSEq",
+      "provider": "email",
+      "role": "student",
+      "created_at": "2026-09-04T17:21:21.550Z"
+    }
+  ],
+  "profiles": [
+    {
+      "user_id": "usr_1788542379263_sqm2f",
+      "name": "Aarav Sharma",
+      "current_class": "Class 10",
+      "target_goal": "Board Exam Preparation & Coding Skills",
+      "preferred_language": "en",
+      "daily_target_minutes": 30,
+      "streak_days": 1,
+      "last_active_date": "2026-09-04",
+      "onboarding_completed": false
+    },
+    {
+      "user_id": "usr_1788542481550_weqra",
+      "name": "Sadiq Mohammed",
+      "current_class": "Class 10",
+      "target_goal": "Advanced Engineering & AI",
+      "preferred_language": "en",
+      "daily_target_minutes": 45,
+      "streak_days": 1,
+      "last_active_date": "2026-09-04",
+      "onboarding_completed": false
+    }
+  ],
+  "categories": [],
+  "classes": [],
+  "subjects": [],
+  "chapters": [],
+  "lessons": [],
+  "questions": [],
+  "quiz_attempts": [
+    {
+      "id": "att_1788542481797_en2w",
+      "user_id": "usr_1788542481550_weqra",
+      "question_id": "sci-1",
+      "topic": "Optics",
+      "is_correct": true,
+      "difficulty": "Easy",
+      "timestamp": 1788542481797
+    },
+    {
+      "id": "att_1788542481739_m4j4",
+      "user_id": "usr_1788542481550_weqra",
+      "question_id": "rn-1",
+      "topic": "Real Numbers",
+      "is_correct": true,
+      "difficulty": "Medium",
+      "timestamp": 1788542481739
+    },
+    {
+      "id": "att_1788542379326_okk5",
+      "user_id": "usr_1788542379263_sqm2f",
+      "question_id": "poly-1",
+      "topic": "Polynomials",
+      "is_correct": false,
+      "difficulty": "Medium",
+      "timestamp": 1788542379326
+    },
+    {
+      "id": "att_1788542379312_yvbt",
+      "user_id": "usr_1788542379263_sqm2f",
+      "question_id": "rn-2",
+      "topic": "Real Numbers",
+      "is_correct": true,
+      "difficulty": "Medium",
+      "timestamp": 1788542379312
+    },
+    {
+      "id": "att_1788542379299_ziy5",
+      "user_id": "usr_1788542379263_sqm2f",
+      "question_id": "rn-1",
+      "topic": "Real Numbers",
+      "is_correct": true,
+      "difficulty": "Easy",
+      "timestamp": 1788542379299
+    }
+  ],
+  "progress": [
+    {
+      "user_id": "usr_1788542379263_sqm2f",
+      "chapter_key": "Class 10_Mathematics_Real Numbers",
+      "completed": true,
+      "score": 100,
+      "percent": 100,
+      "last_studied": 1788542379266
+    },
+    {
+      "user_id": "usr_1788542379263_sqm2f",
+      "chapter_key": "Class 10_Mathematics_Polynomials",
+      "completed": false,
+      "score": 75,
+      "percent": 70,
+      "last_studied": 1788542379275
+    },
+    {
+      "user_id": "usr_1788542379263_sqm2f",
+      "chapter_key": "Class 10_Science_Chemical Reactions and Equations",
+      "completed": true,
+      "score": 100,
+      "percent": 100,
+      "last_studied": 1788542379284
+    },
+    {
+      "user_id": "usr_1788542481550_weqra",
+      "chapter_key": "Class 10_Mathematics_Real Numbers",
+      "completed": true,
+      "score": 100,
+      "percent": 100,
+      "last_studied": 1788542481707
+    },
+    {
+      "user_id": "usr_1788542481550_weqra",
+      "chapter_key": "Class 10_Science_Light",
+      "completed": true,
+      "score": 90,
+      "percent": 100,
+      "last_studied": 1788542481796
+    }
+  ],
+  "bookmarks": [
+    {
+      "id": "bm_1788542481761",
+      "user_id": "usr_1788542481550_weqra",
+      "class_id": "Class 10",
+      "subject_id": "Mathematics",
+      "chapter_id": "Real Numbers",
+      "title": "Real Numbers Chapter Bookmarked",
+      "created_at": "2026-09-04T17:21:21.761Z"
+    }
+  ],
+  "notes": [
+    {
+      "id": "note_1788542481779",
+      "user_id": "usr_1788542481550_weqra",
+      "chapter_key": "Class 10_Mathematics_Real Numbers",
+      "text": "Note saved to backend database: HCF * LCM = Product of two numbers.",
+      "tag": "Formula",
+      "created_at": "2026-09-04T17:21:21.779Z"
+    },
+    {
+      "id": "note_1788542379337",
+      "user_id": "usr_1788542379263_sqm2f",
+      "chapter_key": "Class 10_Mathematics_Real Numbers",
+      "text": "Remember Euclid Division Lemma: a = bq + r with 0 <= r < b. Fundamental for HCF calculations.",
+      "tag": "Formula",
+      "created_at": "2026-09-04T17:19:39.337Z"
+    }
+  ],
+  "sync_queue": []
+}

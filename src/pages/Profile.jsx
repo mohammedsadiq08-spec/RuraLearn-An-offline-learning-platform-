@@ -16,7 +16,10 @@ import {
   Flame,
   BookOpen,
   Save,
-  Download
+  Download,
+  Database,
+  Share2,
+  Upload
 } from 'lucide-react';
 
 export default function Profile() {
@@ -228,6 +231,71 @@ export default function Profile() {
             No lessons downloaded yet. Click "Download for Offline" on any chapter to study without internet.
           </div>
         )}
+      </div>
+
+      {/* Peer-to-Peer Offline Data Bundle Transfer & IndexedDB Status */}
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
+              <Database className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="text-lg font-bold text-slate-900">Local Database & Offline Sharing</h3>
+              <p className="text-xs text-slate-500">Native IndexedDB Engine (RuraLearnDB) active on this device</p>
+            </div>
+          </div>
+          <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200">
+            Real-Time DB Active
+          </span>
+        </div>
+
+        <p className="text-xs text-slate-600 leading-relaxed">
+          Share your downloaded curriculum packs, notes, and progress offline with peers via Bluetooth or USB without any mobile data.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+          <button
+            type="button"
+            onClick={() => storageService.exportOfflineBundle()}
+            className="p-4 rounded-2xl border border-emerald-200 bg-emerald-50/50 hover:bg-emerald-50 text-emerald-950 font-bold text-xs flex items-center justify-between transition-colors text-left"
+          >
+            <div>
+              <span className="block font-bold text-sm">Export Offline Bundle</span>
+              <span className="text-[11px] text-emerald-700 font-normal">Download .json pack to share</span>
+            </div>
+            <Download className="w-5 h-5 text-emerald-800 shrink-0" />
+          </button>
+
+          <label className="p-4 rounded-2xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-900 font-bold text-xs flex items-center justify-between transition-colors text-left cursor-pointer">
+            <div>
+              <span className="block font-bold text-sm">Import Classmate Bundle</span>
+              <span className="text-[11px] text-slate-500 font-normal">Load .json file into database</span>
+            </div>
+            <Upload className="w-5 h-5 text-slate-700 shrink-0" />
+            <input
+              type="file"
+              accept=".json"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (evt) => {
+                  try {
+                    const parsed = JSON.parse(evt.target.result);
+                    const res = storageService.importOfflineBundle(parsed);
+                    if (res) alert('Successfully imported offline learning bundle into your device database!');
+                    else alert('Failed to import bundle. Please check the file.');
+                  } catch (err) {
+                    alert('Error parsing JSON bundle.');
+                  }
+                };
+                reader.readAsText(file);
+              }}
+              className="hidden"
+            />
+          </label>
+        </div>
       </div>
 
       {/* Danger Zone: Reset Progress */}

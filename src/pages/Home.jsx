@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Flame,
@@ -10,15 +10,19 @@ import {
   HardDrive,
   Sparkles,
   TrendingUp,
-  Clock
+  Clock,
+  Share2
 } from 'lucide-react';
 import { useProgress } from '../hooks/useProgress';
 import { useOfflineStatus } from '../hooks/useOfflineStatus';
 import { adaptiveEngine } from '../services/adaptiveEngine';
 import { offlineManager } from '../services/offlineManager';
 import { getChapters } from '../data/curriculum';
+import InstallAppBanner from '../components/common/InstallAppBanner';
+import OfflineShareModal from '../components/common/OfflineShareModal';
 
 export default function Home() {
+  const [isShareOpen, setIsShareOpen] = useState(false);
   const { profile, progress, downloads } = useProgress();
   const { isOnline } = useOfflineStatus();
   const storageStats = offlineManager.getStorageStats();
@@ -53,8 +57,12 @@ export default function Home() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-8">
-      {/* Offline Mode Banner when disconnected */}
+    <div className="space-y-6">
+      {/* 100% Free Offline App Install Prompt */}
+      <InstallAppBanner />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-4 space-y-8">
+        {/* Offline Mode Banner when disconnected */}
       {!isOnline && (
         <div className="bg-amber-50 border border-amber-300 rounded-2xl p-4 flex items-center justify-between gap-3 text-amber-950 shadow-xs animate-fade-in">
           <div className="flex items-center gap-2.5">
@@ -112,6 +120,13 @@ export default function Home() {
               <HardDrive className="w-4 h-4 text-sky-300" />
               <span>{storageStats.totalMB} MB Offline Storage</span>
             </div>
+            <button
+              onClick={() => setIsShareOpen(true)}
+              className="flex items-center gap-2 bg-emerald-500/20 hover:bg-emerald-500/30 backdrop-blur-md px-3.5 py-2 rounded-xl border border-emerald-400/40 text-xs font-bold text-emerald-200 transition-colors"
+            >
+              <Share2 className="w-4 h-4 text-emerald-300" />
+              <span>Share Offline Bundle</span>
+            </button>
           </div>
         </div>
       </div>
@@ -342,6 +357,10 @@ export default function Home() {
           ))}
         </div>
       </div>
+      </div>
+
+      {/* Peer-to-Peer Offline Bundle Sharing Modal */}
+      <OfflineShareModal isOpen={isShareOpen} onClose={() => setIsShareOpen(false)} />
     </div>
   );
 }

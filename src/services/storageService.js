@@ -1,4 +1,5 @@
-// RuraLearn Storage Service - LocalStorage & IndexedDB persistent state engine
+// RuraLearn Storage Service - LocalStorage & Native IndexedDB Hybrid Engine
+import { localDB, STORES } from './localDatabase';
 
 const STORAGE_KEYS = {
   PROFILE: 'ruralearn_profile_v1',
@@ -6,10 +7,11 @@ const STORAGE_KEYS = {
   DOWNLOADS: 'ruralearn_downloads_v1',
   PRACTICE_HISTORY: 'ruralearn_practice_history_v1',
   OFFLINE_SIMULATION: 'ruralearn_offline_simulation_v1',
-  SETTINGS: 'ruralearn_settings_v1',
+  NOTES: 'ruralearn_notes_v1',
 };
 
 const DEFAULT_PROFILE = {
+  id: 'current_student',
   name: 'Aarav Sharma',
   email: 'aarav.sharma@ruralearn.org',
   currentClass: 'Class 10',
@@ -20,7 +22,7 @@ const DEFAULT_PROFILE = {
   joinedDate: 'August 2026',
   preferredLanguage: 'en', // 'en' or 'hi'
   highContrast: false,
-  fontSize: 'normal', // 'normal' | 'large'
+  fontSize: 'normal',
 };
 
 export const storageService = {
@@ -30,7 +32,6 @@ export const storageService = {
       const data = localStorage.getItem(STORAGE_KEYS.PROFILE);
       return data ? { ...DEFAULT_PROFILE, ...JSON.parse(data) } : DEFAULT_PROFILE;
     } catch (e) {
-      console.warn('Storage read error, using default profile', e);
       return DEFAULT_PROFILE;
     }
   },
@@ -40,16 +41,20 @@ export const storageService = {
       const current = this.getProfile();
       const updated = { ...current, ...updates };
       localStorage.setItem(STORAGE_KEYS.PROFILE, JSON.stringify(updated));
+
+      // Persist to native IndexedDB asynchronously
+      localDB.put(STORES.PROFILE, { ...updated, id: 'current_student' });
+      localDB.queueSyncAction('UPDATE_PROFILE', updated);
+
       window.dispatchEvent(new CustomEvent('ruralearn:profile-changed', { detail: updated }));
       return updated;
     } catch (e) {
-      console.error('Storage write error', e);
+      console.error('Profile save error', e);
       return updates;
     }
   },
 
   // Lesson Progress
-  // Maps: `${classId}_${subjectId}_${chapterId}` -> { completed, score, lastStudied, percent }
   getAllProgress() {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.PROGRESS);
@@ -79,6 +84,11 @@ export const storageService = {
         lastStudied: Date.now(),
       };
       localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(all));
+
+      // Asynchronous IndexedDB write
+      localDB.put(STORES.PROGRESS, { key, ...all[key] });
+      localDB.queueSyncAction('SAVE_PROGRESS', { key, data: all[key] });
+
       window.dispatchEvent(new CustomEvent('ruralearn:progress-changed', { detail: all }));
       return all[key];
     } catch (e) {
@@ -87,7 +97,6 @@ export const storageService = {
   },
 
   // Downloaded Packages for Offline Access
-  // Maps: `${classId}_${subjectId}_${chapterId}` -> { title, subject, sizeMB, downloadedAt }
   getDownloadedPacks() {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.DOWNLOADS);
@@ -130,6 +139,7 @@ export const storageService = {
     const downloads = this.getDownloadedPacks();
     if (downloads[key]) {
       delete downloads[key];
+      localDB.delete(STORES.DOWNLOADS, key);
     } else {
       downloads[key] = {
         title: chapterTitle,
@@ -138,6 +148,7 @@ export const storageService = {
         sizeMB,
         downloadedAt: new Date().toISOString(),
       };
+      localDB.put(STORES.DOWNLOADS, { key, ...downloads[key] });
     }
     localStorage.setItem(STORAGE_KEYS.DOWNLOADS, JSON.stringify(downloads));
     window.dispatchEvent(new CustomEvent('ruralearn:downloads-changed', { detail: downloads }));
@@ -155,6 +166,7 @@ export const storageService = {
         sizeMB: (2.5 + Math.random() * 2).toFixed(1) * 1,
         downloadedAt: new Date().toISOString(),
       };
+      localDB.put(STORES.DOWNLOADS, { key, ...downloads[key] });
     });
     localStorage.setItem(STORAGE_KEYS.DOWNLOADS, JSON.stringify(downloads));
     window.dispatchEvent(new CustomEvent('ruralearn:downloads-changed', { detail: downloads }));
@@ -163,10 +175,11 @@ export const storageService = {
 
   clearAllDownloads() {
     localStorage.setItem(STORAGE_KEYS.DOWNLOADS, JSON.stringify({}));
+    localDB.clear(STORES.DOWNLOADS);
     window.dispatchEvent(new CustomEvent('ruralearn:downloads-changed', { detail: {} }));
   },
 
-  // Practice History & Adaptive Metrics
+  // Practice History
   getPracticeHistory() {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.PRACTICE_HISTORY);
@@ -184,19 +197,118 @@ export const storageService = {
   recordPracticeAttempt(attempt) {
     try {
       const history = this.getPracticeHistory();
-      history.unshift({
+      const newAttempt = {
         ...attempt,
         id: 'att_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
         timestamp: Date.now(),
-      });
+      };
+      history.unshift(newAttempt);
       localStorage.setItem(STORAGE_KEYS.PRACTICE_HISTORY, JSON.stringify(history.slice(0, 300)));
+
+      // Save to IndexedDB
+      localDB.put(STORES.PRACTICE_HISTORY, newAttempt);
+      localDB.queueSyncAction('RECORD_PRACTICE', newAttempt);
+
       window.dispatchEvent(new CustomEvent('ruralearn:practice-changed', { detail: history }));
     } catch (e) {
       console.error('Failed to record practice', e);
     }
   },
 
-  // Offline Simulation Toggle (Manual toggle for testing)
+  // Student Study Notes & Bookmarks
+  getAllNotes() {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.NOTES);
+      return data ? JSON.parse(data) : [];
+    } catch (e) {
+      return [];
+    }
+  },
+
+  getLessonNotes(lessonId) {
+    const all = this.getAllNotes();
+    return all.filter((n) => n.lessonId === lessonId);
+  },
+
+  saveNote(lessonId, text, tag = 'Note') {
+    if (!text || !text.trim()) return null;
+    const all = this.getAllNotes();
+    const newNote = {
+      id: 'note_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+      lessonId,
+      text: text.trim(),
+      tag,
+      createdAt: new Date().toISOString(),
+    };
+    all.unshift(newNote);
+    localStorage.setItem(STORAGE_KEYS.NOTES, JSON.stringify(all));
+
+    // Async IndexedDB persistence
+    localDB.put(STORES.STUDY_NOTES, newNote);
+    localDB.queueSyncAction('SAVE_NOTE', newNote);
+
+    window.dispatchEvent(new CustomEvent('ruralearn:notes-changed', { detail: all }));
+    return newNote;
+  },
+
+  deleteNote(noteId) {
+    const all = this.getAllNotes();
+    const filtered = all.filter((n) => n.id !== noteId);
+    localStorage.setItem(STORAGE_KEYS.NOTES, JSON.stringify(filtered));
+
+    localDB.delete(STORES.STUDY_NOTES, noteId);
+    localDB.queueSyncAction('DELETE_NOTE', { id: noteId });
+
+    window.dispatchEvent(new CustomEvent('ruralearn:notes-changed', { detail: filtered }));
+  },
+
+  // Peer-to-Peer Offline Bundle Export & Import
+  exportOfflineBundle() {
+    const bundle = {
+      version: '2.0',
+      exportedAt: new Date().toISOString(),
+      profile: this.getProfile(),
+      progress: this.getAllProgress(),
+      downloads: this.getDownloadedPacks(),
+      notes: this.getAllNotes(),
+      practiceHistory: this.getPracticeHistory(),
+    };
+    const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `ruralearn_offline_pack_${Date.now()}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+    return bundle;
+  },
+
+  importOfflineBundle(bundleData) {
+    try {
+      if (!bundleData) return false;
+      if (bundleData.progress) {
+        localStorage.setItem(STORAGE_KEYS.PROGRESS, JSON.stringify(bundleData.progress));
+      }
+      if (bundleData.downloads) {
+        localStorage.setItem(STORAGE_KEYS.DOWNLOADS, JSON.stringify(bundleData.downloads));
+      }
+      if (bundleData.notes) {
+        localStorage.setItem(STORAGE_KEYS.NOTES, JSON.stringify(bundleData.notes));
+      }
+      if (bundleData.practiceHistory) {
+        localStorage.setItem(STORAGE_KEYS.PRACTICE_HISTORY, JSON.stringify(bundleData.practiceHistory));
+      }
+      window.dispatchEvent(new CustomEvent('ruralearn:progress-changed', { detail: bundleData.progress }));
+      window.dispatchEvent(new CustomEvent('ruralearn:downloads-changed', { detail: bundleData.downloads }));
+      window.dispatchEvent(new CustomEvent('ruralearn:notes-changed', { detail: bundleData.notes }));
+      return true;
+    } catch (e) {
+      console.error('Failed to import offline bundle:', e);
+      return false;
+    }
+  },
+
+  // Offline Simulation
   getOfflineOverride() {
     return localStorage.getItem(STORAGE_KEYS.OFFLINE_SIMULATION) === 'true';
   },
@@ -208,10 +320,12 @@ export const storageService = {
 
   // Reset all application data
   resetAllData() {
-    localStorage.removeItem(STORAGE_KEYS.PROFILE);
-    localStorage.removeItem(STORAGE_KEYS.PROGRESS);
-    localStorage.removeItem(STORAGE_KEYS.DOWNLOADS);
-    localStorage.removeItem(STORAGE_KEYS.PRACTICE_HISTORY);
+    localStorage.clear();
+    localDB.clear(STORES.PROFILE);
+    localDB.clear(STORES.PROGRESS);
+    localDB.clear(STORES.DOWNLOADS);
+    localDB.clear(STORES.PRACTICE_HISTORY);
+    localDB.clear(STORES.STUDY_NOTES);
     window.location.reload();
   }
 };

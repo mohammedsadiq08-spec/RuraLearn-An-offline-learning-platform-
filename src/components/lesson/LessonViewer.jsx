@@ -10,6 +10,7 @@ import ImportantPoints from './ImportantPoints';
 import CommonMistakes from './CommonMistakes';
 import RealWorldCard from './RealWorldCard';
 import QuickCheck from './QuickCheck';
+import StudyNotes from './StudyNotes';
 import LessonNavigation from './LessonNavigation';
 import VisualRenderer from '../visual/VisualRenderer';
 import { useProgress } from '../../hooks/useProgress';
@@ -162,6 +163,12 @@ export default function LessonViewer({ lesson, classId, subjectId, chapterId }) 
         {lesson.commonMistakes && lesson.commonMistakes.length > 0 && (
           <CommonMistakes mistakes={lesson.commonMistakes} />
         )}
+
+        {/* Real-Time Student Study Notes & IndexedDB Bookmarks */}
+        <StudyNotes
+          lessonId={lesson.id || `${classId}_${subjectId}_${chapterId}`}
+          chapterTitle={lesson.title}
+        />
 
         {/* End of Lesson Quick Check Quiz */}
         {lesson.quickCheck && lesson.quickCheck.length > 0 && (

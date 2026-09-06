@@ -15,6 +15,14 @@
       "provider": "email",
       "role": "student",
       "created_at": "2026-09-04T17:21:21.550Z"
+    },
+    {
+      "id": "usr_1788714736397_8cuad",
+      "email": "test_student_1788714736004@ruralearn.org",
+      "password_hash": "$2b$10$kvaaD4/slimhnOKK/UTP5uRUk56qtthC.cN4UcFbPm0q6N6vPJZbm",
+      "provider": "email",
+      "role": "student",
+      "created_at": "2026-09-06T17:12:16.397Z"
     }
   ],
   "profiles": [
@@ -39,6 +47,17 @@
       "streak_days": 1,
       "last_active_date": "2026-09-04",
       "onboarding_completed": false
+    },
+    {
+      "user_id": "usr_1788714736397_8cuad",
+      "name": "Sadiq Mohammed",
+      "current_class": "Class 10",
+      "target_goal": "Advanced Engineering & AI",
+      "preferred_language": "en",
+      "daily_target_minutes": 45,
+      "streak_days": 1,
+      "last_active_date": "2026-09-06",
+      "onboarding_completed": false
     }
   ],
   "categories": [],
@@ -48,6 +67,24 @@
   "lessons": [],
   "questions": [],
   "quiz_attempts": [
+    {
+      "id": "att_1788714736638_2l4w",
+      "user_id": "usr_1788714736397_8cuad",
+      "question_id": "sci-1",
+      "topic": "Optics",
+      "is_correct": true,
+      "difficulty": "Easy",
+      "timestamp": 1788714736638
+    },
+    {
+      "id": "att_1788714736586_6ysg",
+      "user_id": "usr_1788714736397_8cuad",
+      "question_id": "rn-1",
+      "topic": "Real Numbers",
+      "is_correct": true,
+      "difficulty": "Medium",
+      "timestamp": 1788714736586
+    },
     {
       "id": "att_1788542481797_en2w",
       "user_id": "usr_1788542481550_weqra",
@@ -134,9 +171,34 @@
       "score": 90,
       "percent": 100,
       "last_studied": 1788542481796
+    },
+    {
+      "user_id": "usr_1788714736397_8cuad",
+      "chapter_key": "Class 10_Mathematics_Real Numbers",
+      "completed": true,
+      "score": 100,
+      "percent": 100,
+      "last_studied": 1788714736560
+    },
+    {
+      "user_id": "usr_1788714736397_8cuad",
+      "chapter_key": "Class 10_Science_Light",
+      "completed": true,
+      "score": 90,
+      "percent": 100,
+      "last_studied": 1788714736636
     }
   ],
   "bookmarks": [
+    {
+      "id": "bm_1788714736604",
+      "user_id": "usr_1788714736397_8cuad",
+      "class_id": "Class 10",
+      "subject_id": "Mathematics",
+      "chapter_id": "Real Numbers",
+      "title": "Real Numbers Chapter Bookmarked",
+      "created_at": "2026-09-06T17:12:16.604Z"
+    },
     {
       "id": "bm_1788542481761",
       "user_id": "usr_1788542481550_weqra",
@@ -148,6 +210,14 @@
     }
   ],
   "notes": [
+    {
+      "id": "note_1788714736620",
+      "user_id": "usr_1788714736397_8cuad",
+      "chapter_key": "Class 10_Mathematics_Real Numbers",
+      "text": "Note saved to backend database: HCF * LCM = Product of two numbers.",
+      "tag": "Formula",
+      "created_at": "2026-09-06T17:12:16.620Z"
+    },
     {
       "id": "note_1788542481779",
       "user_id": "usr_1788542481550_weqra",

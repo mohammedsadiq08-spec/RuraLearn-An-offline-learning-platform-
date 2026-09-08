@@ -23,6 +23,22 @@
       "provider": "email",
       "role": "student",
       "created_at": "2026-09-06T17:12:16.397Z"
+    },
+    {
+      "id": "usr_1788714992208_dweiw",
+      "email": "priya.verma26@gmail.com",
+      "password_hash": null,
+      "provider": "google",
+      "role": "student",
+      "created_at": "2026-09-06T17:16:32.208Z"
+    },
+    {
+      "id": "usr_1788715497356_2mjua",
+      "email": "rohan.patel@gmail.com",
+      "password_hash": null,
+      "provider": "google",
+      "role": "student",
+      "created_at": "2026-09-06T17:24:57.356Z"
     }
   ],
   "profiles": [
@@ -58,6 +74,39 @@
       "streak_days": 1,
       "last_active_date": "2026-09-06",
       "onboarding_completed": false
+    },
+    {
+      "user_id": "usr_1788714992208_dweiw",
+      "name": "Aarav Sharma",
+      "current_class": "Class 10",
+      "target_goal": "Vocational Skills & Practical Literacy",
+      "preferred_language": "en",
+      "daily_target_minutes": 45,
+      "streak_days": 7,
+      "last_active_date": "2026-09-06",
+      "onboarding_completed": true,
+      "id": "current_student",
+      "email": "aarav.sharma@gmail.com",
+      "currentClass": "Engineering",
+      "currentSubject": "Mathematics",
+      "targetGoal": "Vocational Skills & Practical Literacy",
+      "streakDays": 7,
+      "lastActiveDate": "2026-09-04",
+      "joinedDate": "August 2026",
+      "preferredLanguage": "en",
+      "highContrast": false,
+      "fontSize": "normal"
+    },
+    {
+      "user_id": "usr_1788715497356_2mjua",
+      "name": "Rohan Patel",
+      "current_class": "Engineering",
+      "target_goal": "Computer Science, Coding & Engineering",
+      "preferred_language": "en",
+      "daily_target_minutes": 45,
+      "streak_days": 7,
+      "last_active_date": "2026-09-06",
+      "onboarding_completed": true
     }
   ],
   "categories": [],
@@ -187,6 +236,14 @@
       "score": 90,
       "percent": 100,
       "last_studied": 1788714736636
+    },
+    {
+      "user_id": "usr_1788714992208_dweiw",
+      "chapter_key": "Class 10_Mathematics_Real Numbers",
+      "completed": false,
+      "score": 100,
+      "percent": 75,
+      "last_studied": 1788715037644
     }
   ],
   "bookmarks": [

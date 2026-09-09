@@ -5,6 +5,8 @@ import { CLASS_10_SCIENCE } from './class10Science.js';
 import { ENGLISH_CURRICULUM } from './english.js';
 import { SOCIAL_STUDIES_CURRICULUM } from './socialStudies.js';
 import { ENGINEERING_CURRICULUM } from './engineering.js';
+import { PROGRAMMING_LANGUAGES_GUIDE, ENGINEERING_CAREER_PATHS } from '../engineeringRoadmaps.js';
+import { SKILL_TRACKS } from '../skillRoadmaps.js';
 
 // Master nested lessons structure: lessons[class][subject][chapter]
 export const ALL_LESSONS = {
@@ -26,7 +28,6 @@ export const ALL_LESSONS = {
       'Operating Systems': ENGINEERING_CURRICULUM['Computer Science']['Operating Systems'],
     },
   },
-  // Seamless fallback mappings for classes 8, 9, 11, 12 using foundational curriculum packs
   'Class 9': {
     'Mathematics': {
       'Number Systems': {
@@ -34,12 +35,12 @@ export const ALL_LESSONS = {
         id: 'math-9-number-systems',
         title: 'Number Systems',
         classId: 'Class 9',
-        subtitle: 'Rational and Irrational numbers on number line',
+        subtitle: 'Rational and Irrational numbers on the number line',
       },
       'Polynomials': {
         ...CLASS_10_MATH['Polynomials'],
         id: 'math-9-polynomials',
-        title: 'Polynomials',
+        title: 'Polynomials & Factorization',
         classId: 'Class 9',
       },
       'Coordinate Geometry': {
@@ -73,7 +74,7 @@ export const ALL_LESSONS = {
       'Rational Numbers': {
         ...CLASS_10_MATH['Real Numbers'],
         id: 'math-8-rational',
-        title: 'Rational Numbers',
+        title: 'Rational Numbers & Operations',
         classId: 'Class 8',
       },
       'Linear Equations in One Variable': {
@@ -93,6 +94,79 @@ export const ALL_LESSONS = {
       },
     },
     'English': ENGLISH_CURRICULUM,
+    'Social Science': SOCIAL_STUDIES_CURRICULUM,
+  },
+  'Class 7': {
+    'Mathematics': {
+      'Integers': {
+        ...CLASS_10_MATH['Real Numbers'],
+        id: 'math-7-integers',
+        title: 'Integers & Arithmetic Properties',
+        classId: 'Class 7',
+        subtitle: 'Positive, Negative integers and number line representations',
+      },
+      'Fractions and Decimals': {
+        ...CLASS_10_MATH['Real Numbers'],
+        id: 'math-7-fractions',
+        title: 'Fractions and Decimals',
+        classId: 'Class 7',
+        subtitle: 'Multiplication and division of fractions in rural trade',
+      },
+    },
+    'Science': {
+      'Nutrition in Plants and Animals': {
+        ...CLASS_10_SCIENCE['Life Processes'],
+        id: 'sci-7-nutrition',
+        title: 'Nutrition in Plants & Photosynthesis',
+        classId: 'Class 7',
+        subtitle: 'Autotrophic and Heterotrophic nutrition',
+      },
+      'Heat and Temperature': {
+        ...CLASS_10_SCIENCE['Electricity'],
+        id: 'sci-7-heat',
+        title: 'Heat, Conduction, Convection & Radiation',
+        classId: 'Class 7',
+        subtitle: 'Clinical and laboratory thermometers',
+      },
+    },
+    'English': ENGLISH_CURRICULUM,
+    'Social Science': SOCIAL_STUDIES_CURRICULUM,
+  },
+  'Class 6': {
+    'Mathematics': {
+      'Knowing Our Numbers': {
+        ...CLASS_10_MATH['Real Numbers'],
+        id: 'math-6-numbers',
+        title: 'Knowing Our Numbers & Place Values',
+        classId: 'Class 6',
+        subtitle: 'Large numbers, Indian and International place value charts',
+      },
+      'Whole Numbers': {
+        ...CLASS_10_MATH['Real Numbers'],
+        id: 'math-6-whole',
+        title: 'Whole Numbers and Number Line',
+        classId: 'Class 6',
+        subtitle: 'Predecessor, Successor and properties of whole numbers',
+      },
+    },
+    'Science': {
+      'Components of Food': {
+        ...CLASS_10_SCIENCE['Life Processes'],
+        id: 'sci-6-food',
+        title: 'Components of Food & Balanced Diet',
+        classId: 'Class 6',
+        subtitle: 'Carbohydrates, Proteins, Fats, Vitamins and Deficiency diseases',
+      },
+      'Sorting Materials into Groups': {
+        ...CLASS_10_SCIENCE['Chemical Reactions and Equations'],
+        id: 'sci-6-materials',
+        title: 'Sorting Materials & Physical Properties',
+        classId: 'Class 6',
+        subtitle: 'Hardness, Solubility, Transparency and Density',
+      },
+    },
+    'English': ENGLISH_CURRICULUM,
+    'Social Science': SOCIAL_STUDIES_CURRICULUM,
   },
   'Class 11': {
     'Mathematics': {
@@ -115,15 +189,13 @@ export const ALL_LESSONS = {
         classId: 'Class 11',
       },
     },
-    'Physics': {
+    'Science': {
       'Laws of Motion': {
         ...CLASS_10_SCIENCE['Electricity'],
         id: 'phy-11-motion',
         title: 'Laws of Motion & Friction',
         classId: 'Class 11',
       },
-    },
-    'Chemistry': {
       'Structure of Atom': {
         ...CLASS_10_SCIENCE['Chemical Reactions and Equations'],
         id: 'chem-11-atom',
@@ -131,6 +203,7 @@ export const ALL_LESSONS = {
         classId: 'Class 11',
       },
     },
+    'English': ENGLISH_CURRICULUM,
   },
   'Class 12': {
     'Mathematics': {
@@ -147,7 +220,7 @@ export const ALL_LESSONS = {
         classId: 'Class 12',
       },
     },
-    'Physics': {
+    'Science': {
       'Current Electricity': {
         ...CLASS_10_SCIENCE['Electricity'],
         id: 'phy-12-current',
@@ -160,8 +233,6 @@ export const ALL_LESSONS = {
         title: 'Ray Optics & Optical Instruments',
         classId: 'Class 12',
       },
-    },
-    'Chemistry': {
       'Electrochemistry': {
         ...CLASS_10_SCIENCE['Acids, Bases and Salts'],
         id: 'chem-12-electrochem',
@@ -169,6 +240,7 @@ export const ALL_LESSONS = {
         classId: 'Class 12',
       },
     },
+    'English': ENGLISH_CURRICULUM,
   }
 };
 
@@ -209,7 +281,6 @@ export function getChapters(classId, subjectId) {
 }
 
 export function getLesson(classId, subjectId, chapterId) {
-  // Normalize and search
   const classLessons = ALL_LESSONS[classId] || ALL_LESSONS['Class 10'];
   if (!classLessons) return null;
 
@@ -247,11 +318,13 @@ export function getAdjacentChapters(classId, subjectId, chapterId) {
   };
 }
 
+// Global search across School, Engineering, and Skills
 export function searchCurriculum(query) {
   if (!query || query.trim().length < 2) return [];
   const q = query.toLowerCase().trim();
   const results = [];
 
+  // Search School & Engineering Lessons
   Object.keys(ALL_LESSONS).forEach((cls) => {
     Object.keys(ALL_LESSONS[cls]).forEach((sub) => {
       Object.keys(ALL_LESSONS[cls][sub]).forEach((ch) => {
@@ -259,20 +332,42 @@ export function searchCurriculum(query) {
         if (
           ch.toLowerCase().includes(q) ||
           lesson.title.toLowerCase().includes(q) ||
-          lesson.subtitle.toLowerCase().includes(q) ||
-          (lesson.introduction && lesson.introduction.toLowerCase().includes(q))
+          (lesson.subtitle && lesson.subtitle.toLowerCase().includes(q))
         ) {
           results.push({
-            classId: cls,
-            subjectId: sub,
-            chapterId: ch,
+            type: 'Lesson',
+            url: `/school/${encodeURIComponent(cls)}/${encodeURIComponent(sub)}/${encodeURIComponent(ch)}`,
             title: lesson.title,
-            subtitle: lesson.subtitle,
+            category: `${cls} • ${sub}`,
           });
         }
       });
     });
   });
 
-  return results.slice(0, 8);
+  // Search Programming Languages
+  PROGRAMMING_LANGUAGES_GUIDE.forEach((lang) => {
+    if (lang.name.toLowerCase().includes(q) || lang.category.toLowerCase().includes(q) || lang.why.toLowerCase().includes(q)) {
+      results.push({
+        type: 'Engineering Language',
+        url: '/engineering',
+        title: lang.name,
+        category: `Engineering • ${lang.category}`,
+      });
+    }
+  });
+
+  // Search Skills
+  SKILL_TRACKS.forEach((sk) => {
+    if (sk.title.toLowerCase().includes(q) || sk.category.toLowerCase().includes(q) || sk.whyLearn.toLowerCase().includes(q)) {
+      results.push({
+        type: 'Skill Roadmap',
+        url: '/skills',
+        title: sk.title,
+        category: `Skills • ${sk.category}`,
+      });
+    }
+  });
+
+  return results.slice(0, 10);
 }

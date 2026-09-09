@@ -1,7 +1,106 @@
 // RuraLearn Practice Questions Bank
-// Categorized by Class, Subject, Chapter, and Difficulty (Easy, Medium, Hard)
+// Categorized by Class (6-12 & Engineering), Subject, Chapter, and Difficulty (Easy, Medium, Hard)
 
 export const PRACTICE_QUESTIONS = [
+  // Class 6 Mathematics
+  {
+    id: 'pq-c6-m-1',
+    classId: 'Class 6',
+    subjectId: 'Mathematics',
+    chapterId: 'Knowing Our Numbers',
+    topic: 'Number System',
+    difficulty: 'Easy',
+    question: "What is the place value of 7 in the number 45,782?",
+    options: ["7", "70", "700", "7000"],
+    correctIndex: 2,
+    hint: "Identify the digit at the hundreds position.",
+    explanation: "In 45,782, 7 is in the hundreds position, so its place value is 7 × 100 = 700."
+  },
+  {
+    id: 'pq-c6-s-1',
+    classId: 'Class 6',
+    subjectId: 'Science',
+    chapterId: 'Components of Food',
+    topic: 'Nutrition & Nutrients',
+    difficulty: 'Easy',
+    question: "Which vitamin is primarily synthesized when our skin is exposed to sunlight?",
+    options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"],
+    correctIndex: 3,
+    hint: "It helps in the absorption of calcium for strong bones.",
+    explanation: "Our body synthesizes Vitamin D when sunlight strikes our skin. It helps the body absorb calcium."
+  },
+
+  // Class 7 Science & Math
+  {
+    id: 'pq-c7-s-1',
+    classId: 'Class 7',
+    subjectId: 'Science',
+    chapterId: 'Nutrition in Plants',
+    topic: 'Photosynthesis',
+    difficulty: 'Medium',
+    question: "Which green pigment in leaves captures solar energy during photosynthesis?",
+    options: ["Carotene", "Chlorophyll", "Hemoglobin", "Xanthophyll"],
+    correctIndex: 1,
+    hint: "It gives leaves their vibrant green color.",
+    explanation: "Chlorophyll is the green pigment in chloroplasts that absorbs sunlight energy for photosynthesis."
+  },
+  {
+    id: 'pq-c7-m-1',
+    classId: 'Class 7',
+    subjectId: 'Mathematics',
+    chapterId: 'Integers',
+    topic: 'Integer Operations',
+    difficulty: 'Easy',
+    question: "What is the value of (-15) + (-28)?",
+    options: ["-43", "13", "43", "-13"],
+    correctIndex: 0,
+    hint: "When adding two negative numbers, add their absolute values and keep the minus sign.",
+    explanation: "(-15) + (-28) = -(15 + 28) = -43."
+  },
+
+  // Class 8 Science & Math
+  {
+    id: 'pq-c8-s-1',
+    classId: 'Class 8',
+    subjectId: 'Science',
+    chapterId: 'Force and Pressure',
+    topic: 'Pressure Formula',
+    difficulty: 'Medium',
+    question: "If a force of 100 N acts perpendicular to an area of 2 m², what is the resulting pressure?",
+    options: ["200 Pa", "50 Pa", "25 Pa", "100 Pa"],
+    correctIndex: 1,
+    hint: "Pressure = Force / Area.",
+    explanation: "Pressure = Force / Area = 100 N / 2 m² = 50 Pascals (N/m²)."
+  },
+
+  // Class 9 Science & Math
+  {
+    id: 'pq-c9-s-1',
+    classId: 'Class 9',
+    subjectId: 'Science',
+    chapterId: 'Motion',
+    topic: 'Equations of Motion',
+    difficulty: 'Medium',
+    question: "A car starts from rest (u=0) and accelerates uniformly at 2 m/s² for 5 seconds. What is its final velocity?",
+    options: ["5 m/s", "10 m/s", "20 m/s", "25 m/s"],
+    correctIndex: 1,
+    hint: "Use the first equation of motion: v = u + at.",
+    explanation: "v = u + at = 0 + (2 m/s² × 5 s) = 10 m/s."
+  },
+  {
+    id: 'pq-c9-m-1',
+    classId: 'Class 9',
+    subjectId: 'Mathematics',
+    chapterId: 'Number Systems',
+    topic: 'Rational vs Irrational',
+    difficulty: 'Easy',
+    question: "Which of the following is an irrational number?",
+    options: ["√4", "√9", "√2", "3/4"],
+    correctIndex: 2,
+    hint: "Look for a square root that does not result in an exact integer.",
+    explanation: "√2 is a non-terminating, non-repeating decimal (approx 1.414...) and cannot be expressed as p/q."
+  },
+
   // Class 10 Mathematics - Real Numbers
   {
     id: 'pq-math-rn-1',
@@ -64,57 +163,11 @@ export const PRACTICE_QUESTIONS = [
     chapterId: 'Polynomials',
     topic: 'Polynomials - Factorisation',
     difficulty: 'Medium',
-    question: "If the zeroes of the quadratic polynomial ax² + bx + c (c ≠ 0) are equal, then:",
-    options: [
-      "c and a have opposite signs",
-      "c and b have opposite signs",
-      "c and a have the same sign",
-      "c and b have the same sign"
-    ],
-    correctIndex: 2,
-    hint: "For equal roots, D = b² - 4ac = 0 → b² = 4ac.",
-    explanation: "b² = 4ac. Since b² is always positive (b² ≥ 0), 4ac must also be positive. Hence a and c must have the SAME sign."
-  },
-  {
-    id: 'pq-math-poly-3',
-    classId: 'Class 10',
-    subjectId: 'Mathematics',
-    chapterId: 'Polynomials',
-    topic: 'Polynomials - Factorisation',
-    difficulty: 'Hard',
-    question: "If one zero of the quadratic polynomial 2x² - 3x + k is reciprocal of the other, find k.",
-    options: ["2", "-2", "3", "1/2"],
-    correctIndex: 0,
-    hint: "If roots are α and 1/α, their product α · (1/α) = 1. What is product of roots in terms of coefficients?",
-    explanation: "Product of zeroes = c/a → α × (1/α) = k / 2 → 1 = k / 2 → k = 2."
-  },
-
-  // Class 10 Mathematics - Quadratic Equations
-  {
-    id: 'pq-math-quad-1',
-    classId: 'Class 10',
-    subjectId: 'Mathematics',
-    chapterId: 'Quadratic Equations',
-    topic: 'Quadratic Equations - Discriminant',
-    difficulty: 'Easy',
-    question: "The discriminant of the equation 3x² - 5x + 2 = 0 is:",
-    options: ["1", "-1", "49", "25"],
-    correctIndex: 0,
-    hint: "Evaluate D = b² - 4ac where a=3, b=-5, c=2.",
-    explanation: "D = (-5)² - 4(3)(2) = 25 - 24 = 1. Since D > 0, roots are real and distinct."
-  },
-  {
-    id: 'pq-math-quad-2',
-    classId: 'Class 10',
-    subjectId: 'Mathematics',
-    chapterId: 'Quadratic Equations',
-    topic: 'Quadratic Equations - Roots',
-    difficulty: 'Medium',
-    question: "If the equation x² - kx + 4 = 0 has no real roots, then the value of k lies in:",
-    options: ["k > 4", "k < -4", "-4 < k < 4", "k = ±4"],
-    correctIndex: 2,
-    hint: "No real roots means D < 0. Evaluate b² - 4ac < 0.",
-    explanation: "D = (-k)² - 4(1)(4) < 0 → k² - 16 < 0 → k² < 16 → -4 < k < 4."
+    question: "If α and β are the zeroes of the quadratic polynomial ax² + bx + c, what is the sum of zeroes (α + β)?",
+    options: ["c/a", "-b/a", "b/a", "-c/a"],
+    correctIndex: 1,
+    hint: "Sum of zeroes is related to the coefficient of x and x².",
+    explanation: "For ax² + bx + c = 0, sum of zeroes α + β = -b/a, and product α · β = c/a."
   },
 
   // Class 10 Science - Chemical Reactions
@@ -123,27 +176,29 @@ export const PRACTICE_QUESTIONS = [
     classId: 'Class 10',
     subjectId: 'Science',
     chapterId: 'Chemical Reactions and Equations',
-    topic: 'Chemical Equations Balancing',
+    topic: 'Chemical Reactions - Balancing',
     difficulty: 'Easy',
-    question: "When magnesium ribbon is burnt in air, the white ash formed is:",
-    options: ["Magnesium Nitrate", "Magnesium Oxide", "Magnesium Carbonate", "Magnesium Sulphate"],
+    question: "What type of chemical reaction is: CaO(s) + H₂O(l) → Ca(OH)₂(aq) + Heat?",
+    options: ["Decomposition", "Combination", "Displacement", "Double Displacement"],
     correctIndex: 1,
-    hint: "Magnesium reacts with atmospheric oxygen gas.",
-    explanation: "2Mg(s) + O₂(g) → 2MgO(s). Magnesium burns with a dazzling white flame to form white magnesium oxide powder."
+    hint: "Two reactants combine to form a single product.",
+    explanation: "A combination reaction occurs when two or more reactants synthesize into a single compound."
   },
   {
     id: 'pq-sci-chem-2',
     classId: 'Class 10',
     subjectId: 'Science',
     chapterId: 'Chemical Reactions and Equations',
-    topic: 'Chemical Equations Balancing',
+    topic: 'Chemical Reactions - Balancing',
     difficulty: 'Medium',
-    question: "In the reaction: CuO + H₂ → Cu + H₂O, which substance acts as the reducing agent?",
-    options: ["CuO", "H₂", "Cu", "H₂O"],
-    correctIndex: 1,
-    hint: "The substance that removes oxygen or undergoes oxidation is the reducing agent.",
-    explanation: "Hydrogen (H₂) gains oxygen to become H₂O (it is oxidized), thus acting as the reducing agent."
+    question: "In the redox reaction: CuO + H₂ → Cu + H₂O, which substance is oxidized?",
+    options: ["CuO", "Cu", "H₂", "H₂O"],
+    correctIndex: 2,
+    hint: "Oxidation is the gain of oxygen or loss of hydrogen.",
+    explanation: "H₂ gains oxygen to become H₂O, so H₂ is oxidized. CuO loses oxygen to become Cu, so CuO is reduced."
   },
+
+  // Class 10 Science - Electricity
   {
     id: 'pq-sci-elec-1',
     classId: 'Class 10',
@@ -171,7 +226,35 @@ export const PRACTICE_QUESTIONS = [
     explanation: "R' = ρ(2L) / (A/2) = 4 · [ρL / A] = 4R. Doubling length and halving thickness increases resistance 4-fold."
   },
 
-  // Higher Ed / Engineering
+  // Class 11 & 12
+  {
+    id: 'pq-c11-p-1',
+    classId: 'Class 11',
+    subjectId: 'Physics',
+    chapterId: 'Kinematics',
+    topic: 'Vectors & Motion',
+    difficulty: 'Medium',
+    question: "What is the angle of projection for which the horizontal range of a projectile is maximum?",
+    options: ["30°", "45°", "60°", "90°"],
+    correctIndex: 1,
+    hint: "Range R = (u² sin 2θ) / g. Maximum occurs when sin 2θ = 1.",
+    explanation: "sin 2θ = 1 ⇒ 2θ = 90° ⇒ θ = 45°. At 45°, horizontal range is maximized."
+  },
+  {
+    id: 'pq-c12-m-1',
+    classId: 'Class 12',
+    subjectId: 'Mathematics',
+    chapterId: 'Calculus - Integrals',
+    topic: 'Integration by Parts',
+    difficulty: 'Hard',
+    question: "What is the integral ∫ ln(x) dx?",
+    options: ["1/x + C", "x ln(x) - x + C", "x ln(x) + x + C", "ln(x)² / 2 + C"],
+    correctIndex: 1,
+    hint: "Use integration by parts: ∫ u dv = u v - ∫ v du with u = ln(x) and dv = dx.",
+    explanation: "u = ln(x), du = (1/x)dx; dv = dx, v = x. Thus ∫ ln(x) dx = x·ln(x) - ∫ x·(1/x) dx = x ln(x) - x + C."
+  },
+
+  // Engineering & College
   {
     id: 'pq-eng-ds-1',
     classId: 'Engineering',
@@ -197,5 +280,18 @@ export const PRACTICE_QUESTIONS = [
     correctIndex: 0,
     hint: "You only need to update the new node's next pointer to head, then update head.",
     explanation: "Insertion at the head takes O(1) constant time because it only requires updating two pointers regardless of list size."
+  },
+  {
+    id: 'pq-eng-py-1',
+    classId: 'Engineering',
+    subjectId: 'Programming',
+    chapterId: 'Python & SQL',
+    topic: 'SQL Joins',
+    difficulty: 'Medium',
+    question: "Which SQL JOIN returns all rows from the left table and the matched rows from the right table?",
+    options: ["INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL OUTER JOIN"],
+    correctIndex: 1,
+    hint: "It guarantees that no row from the first (left) table is dropped.",
+    explanation: "LEFT JOIN (or LEFT OUTER JOIN) returns all records from the left table, and matching records from the right table (or NULLs if no match)."
   }
 ];

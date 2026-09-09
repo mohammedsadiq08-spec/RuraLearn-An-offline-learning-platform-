@@ -1,17 +1,43 @@
-// RuraLearn Curriculum Classes & Subjects Registry
+// RuraLearn Curriculum Classes & Subjects Registry (Class 6 to 12 + Engineering)
 
 export const CLASSES = [
   {
-    id: 'Class 10',
-    name: 'Class 10',
-    badge: 'Secondary Board Prep',
-    description: 'Core foundation subjects aligned with national and state secondary boards.',
+    id: 'Class 6',
+    name: 'Class 6',
+    badge: 'Upper Primary Foundation',
+    description: 'Foundations of numbers, basic geometry, science exploration, and grammar.',
     level: 'School',
     subjects: [
-      { id: 'Mathematics', name: 'Mathematics', icon: 'Calculator', color: 'emerald', totalChapters: 8 },
-      { id: 'Science', name: 'Science', icon: 'Atom', color: 'blue', totalChapters: 8 },
-      { id: 'English', name: 'English', icon: 'BookOpen', color: 'amber', totalChapters: 6 },
-      { id: 'Social Studies', name: 'Social Studies', icon: 'Globe', color: 'purple', totalChapters: 4 },
+      { id: 'Mathematics', name: 'Mathematics', icon: 'Calculator', color: 'emerald', totalChapters: 5 },
+      { id: 'Science', name: 'Science', icon: 'Atom', color: 'blue', totalChapters: 5 },
+      { id: 'English', name: 'English', icon: 'BookOpen', color: 'amber', totalChapters: 4 },
+      { id: 'Social Science', name: 'Social Science', icon: 'Globe', color: 'purple', totalChapters: 4 },
+    ]
+  },
+  {
+    id: 'Class 7',
+    name: 'Class 7',
+    badge: 'Middle School',
+    description: 'Integers, algebraic expressions, nutrition in plants/animals, and history.',
+    level: 'School',
+    subjects: [
+      { id: 'Mathematics', name: 'Mathematics', icon: 'Calculator', color: 'emerald', totalChapters: 5 },
+      { id: 'Science', name: 'Science', icon: 'Atom', color: 'blue', totalChapters: 5 },
+      { id: 'English', name: 'English', icon: 'BookOpen', color: 'amber', totalChapters: 4 },
+      { id: 'Social Science', name: 'Social Science', icon: 'Globe', color: 'purple', totalChapters: 4 },
+    ]
+  },
+  {
+    id: 'Class 8',
+    name: 'Class 8',
+    badge: 'Middle School Foundation',
+    description: 'Rational numbers, linear equations, cells, forces, and practical science.',
+    level: 'School',
+    subjects: [
+      { id: 'Mathematics', name: 'Mathematics', icon: 'Calculator', color: 'emerald', totalChapters: 5 },
+      { id: 'Science', name: 'Science', icon: 'Atom', color: 'blue', totalChapters: 5 },
+      { id: 'English', name: 'English', icon: 'BookOpen', color: 'amber', totalChapters: 4 },
+      { id: 'Social Science', name: 'Social Science', icon: 'Globe', color: 'purple', totalChapters: 4 },
     ]
   },
   {
@@ -28,15 +54,16 @@ export const CLASSES = [
     ]
   },
   {
-    id: 'Class 8',
-    name: 'Class 8',
-    badge: 'Middle School',
-    description: 'Rational numbers, linear equations, cells, forces, and practical science.',
+    id: 'Class 10',
+    name: 'Class 10',
+    badge: 'Secondary Board Prep',
+    description: 'Core foundation subjects aligned with national and state secondary boards.',
     level: 'School',
     subjects: [
-      { id: 'Mathematics', name: 'Mathematics', icon: 'Calculator', color: 'emerald', totalChapters: 5 },
-      { id: 'Science', name: 'Science', icon: 'Atom', color: 'blue', totalChapters: 5 },
-      { id: 'English', name: 'English', icon: 'BookOpen', color: 'amber', totalChapters: 4 },
+      { id: 'Mathematics', name: 'Mathematics', icon: 'Calculator', color: 'emerald', totalChapters: 8 },
+      { id: 'Science', name: 'Science', icon: 'Atom', color: 'blue', totalChapters: 8 },
+      { id: 'English', name: 'English', icon: 'BookOpen', color: 'amber', totalChapters: 6 },
+      { id: 'Social Studies', name: 'Social Studies', icon: 'Globe', color: 'purple', totalChapters: 4 },
     ]
   },
   {
@@ -47,26 +74,26 @@ export const CLASSES = [
     level: 'School',
     subjects: [
       { id: 'Mathematics', name: 'Mathematics', icon: 'Calculator', color: 'emerald', totalChapters: 6 },
-      { id: 'Physics', name: 'Physics', icon: 'Zap', color: 'sky', totalChapters: 5 },
-      { id: 'Chemistry', name: 'Chemistry', icon: 'FlaskConical', color: 'purple', totalChapters: 5 },
+      { id: 'Science', name: 'Physics & Chemistry', icon: 'Atom', color: 'blue', totalChapters: 6 },
+      { id: 'English', name: 'English Core', icon: 'BookOpen', color: 'amber', totalChapters: 5 },
     ]
   },
   {
     id: 'Class 12',
     name: 'Class 12',
-    badge: 'Senior Secondary',
+    badge: 'Senior Secondary Board',
     description: 'Calculus, Electromagnetism, Organic Chemistry, and Board Examination mastery.',
     level: 'School',
     subjects: [
       { id: 'Mathematics', name: 'Mathematics', icon: 'Calculator', color: 'emerald', totalChapters: 6 },
-      { id: 'Physics', name: 'Physics', icon: 'Zap', color: 'sky', totalChapters: 6 },
-      { id: 'Chemistry', name: 'Chemistry', icon: 'FlaskConical', color: 'purple', totalChapters: 6 },
+      { id: 'Science', name: 'Physics & Chemistry', icon: 'Atom', color: 'blue', totalChapters: 6 },
+      { id: 'English', name: 'English Core', icon: 'BookOpen', color: 'amber', totalChapters: 5 },
     ]
   },
   {
     id: 'Engineering',
-    name: 'Engineering & Higher Ed',
-    badge: 'College & Technical',
+    name: 'Engineering & College',
+    badge: 'Technical & Industry Ready',
     description: 'Industry-relevant technical foundations: Data Structures, OS, DBMS, and Python.',
     level: 'Higher Education',
     subjects: [

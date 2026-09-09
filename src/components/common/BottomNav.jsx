@@ -1,19 +1,20 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, BookOpen, PenTool, Sparkles, BarChart2, User } from 'lucide-react';
+import { Home, GraduationCap, Cpu, Sparkles, PenTool, BarChart2, HardDrive } from 'lucide-react';
 
 export default function BottomNav() {
   const navItems = [
     { to: '/', label: 'Home', icon: Home, exact: true },
-    { to: '/learn', label: 'Learn', icon: BookOpen },
-    { to: '/practice', label: 'Practice', icon: PenTool },
+    { to: '/school', label: 'School', icon: GraduationCap },
+    { to: '/engineering', label: 'College', icon: Cpu },
     { to: '/skills', label: 'Skills', icon: Sparkles },
+    { to: '/practice', label: 'Practice', icon: PenTool },
     { to: '/progress', label: 'Progress', icon: BarChart2 },
-    { to: '/profile', label: 'Profile', icon: User },
+    { to: '/profile', label: 'Storage', icon: HardDrive },
   ];
 
   return (
-    <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-slate-200/90 shadow-lg px-2 py-1.5 pb-safe">
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-neutral-900 border-t border-slate-200/90 dark:border-neutral-800 shadow-lg px-1 py-1 pb-safe">
       <div className="flex items-center justify-around">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -23,23 +24,23 @@ export default function BottomNav() {
               to={item.to}
               end={item.exact}
               className={({ isActive }) =>
-                `flex flex-col items-center justify-center py-1 px-2 rounded-xl transition-all ${
+                `flex flex-col items-center justify-center py-1 px-1 rounded-xl transition-all ${
                   isActive
-                    ? 'text-emerald-800 font-black scale-105'
-                    : 'text-slate-500 hover:text-slate-800 font-medium'
+                    ? 'text-emerald-800 dark:text-emerald-400 font-bold scale-105'
+                    : 'text-slate-500 dark:text-neutral-400 hover:text-slate-800 dark:hover:text-white font-medium'
                 }`
               }
             >
               {({ isActive }) => (
                 <>
                   <div
-                    className={`w-8 h-8 rounded-xl flex items-center justify-center transition-colors ${
-                      isActive ? 'bg-emerald-100 text-emerald-800' : 'text-slate-500'
+                    className={`w-7 h-7 rounded-lg flex items-center justify-center transition-colors ${
+                      isActive ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300' : 'text-slate-500 dark:text-neutral-400'
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-[10px] mt-0.5 tracking-tight">{item.label}</span>
+                  <span className="text-[9px] mt-0.5 tracking-tight">{item.label}</span>
                 </>
               )}
             </NavLink>

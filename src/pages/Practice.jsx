@@ -160,7 +160,13 @@ export default function Practice() {
             className="bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-slate-800 focus:outline-none focus:ring-1 focus:ring-emerald-700"
           >
             <option value="All">All Classes</option>
+            <option value="Class 6">Class 6</option>
+            <option value="Class 7">Class 7</option>
+            <option value="Class 8">Class 8</option>
+            <option value="Class 9">Class 9</option>
             <option value="Class 10">Class 10</option>
+            <option value="Class 11">Class 11</option>
+            <option value="Class 12">Class 12</option>
             <option value="Engineering">Engineering</option>
           </select>
         </div>
@@ -176,7 +182,9 @@ export default function Practice() {
             <option value="All">All Subjects</option>
             <option value="Mathematics">Mathematics</option>
             <option value="Science">Science</option>
+            <option value="Physics">Physics</option>
             <option value="Computer Science">Computer Science</option>
+            <option value="Programming">Programming</option>
           </select>
         </div>
 

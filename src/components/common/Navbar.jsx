@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 import OfflineIndicator from './OfflineIndicator';
-import { Search, X, HardDrive } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { searchCurriculum } from '../../data/curriculum';
-import { useProgress } from '../../hooks/useProgress';
 
 export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { profile } = useProgress();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -76,7 +74,7 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Search Bar & Status */}
+        {/* Search Bar & Network Status Indicator */}
         <div className="flex items-center gap-2 sm:gap-3">
           {/* Quick Offline Search Input */}
           <div className="relative">
@@ -122,18 +120,8 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Network Indicator */}
+          {/* Network Indicator (Online / Offline) */}
           <OfflineIndicator />
-
-          {/* Device Storage / Settings Button */}
-          <Link
-            to="/profile"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-neutral-800 hover:bg-slate-200 dark:hover:bg-neutral-700 text-slate-700 dark:text-neutral-300 text-xs font-medium border border-slate-200 dark:border-neutral-700 transition-colors"
-            title="Local Device Storage & Settings"
-          >
-            <HardDrive className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
-            <span className="hidden sm:inline">Device Storage</span>
-          </Link>
         </div>
       </div>
     </header>

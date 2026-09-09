@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, GraduationCap, Cpu, Sparkles, PenTool, BarChart2, HardDrive } from 'lucide-react';
+import { Home, GraduationCap, Cpu, Sparkles, PenTool, BarChart2, User } from 'lucide-react';
 
 export default function BottomNav() {
   const navItems = [
@@ -10,7 +10,7 @@ export default function BottomNav() {
     { to: '/skills', label: 'Skills', icon: Sparkles },
     { to: '/practice', label: 'Practice', icon: PenTool },
     { to: '/progress', label: 'Progress', icon: BarChart2 },
-    { to: '/profile', label: 'Storage', icon: HardDrive },
+    { to: '/profile', label: 'Profile', icon: User },
   ];
 
   return (
